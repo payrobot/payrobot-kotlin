@@ -26,7 +26,7 @@ Creates a new wallet where you can receive, store and send funds for your web or
 //import payrobot.models.*
 
 val apiInstance = WalletApi()
-val currency : kotlin.String = btc // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
+val currency : kotlin.String = "btc" // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
 try {
     val result : WalletCreationInfo = apiInstance.createWallet(currency)
     println(result)
@@ -62,9 +62,97 @@ No authorization required
 # **createWalletSendRequest**
 > WalletSendRequest createWalletSendRequest(currency, walletId, destination, seed, token, paramCallback)
 
-Send funds from a wallet
+Sends funds from a wallet to one or multiple addresses.
 
-Sends funds from a wallet to one or multiple addresses.  --- ## Required Authorization Token This transaction requires an authorization &#x60;token&#x60; which is the result of the &#x60;sha-256&#x60; hash of the following string:        walletId~destination~seed~walletPassphrase    **For example**  Considering the following example values for the token:   - &#x60;walletId&#x60; 9df3f909-088d-4724-b34f-9a587c5ccc15   - &#x60;destination&#x60;     [{\&quot;address\&quot;:\&quot;bc1q5defveu0acrf87m3huwxjq6pqaszdjf3d4ej9y\&quot;,\&quot;amount\&quot;:0.01},{\&quot;address\&quot;:\&quot;bc1qs59a7e23zpjm0znteytrxvj839dlp205e50zch\&quot;,\&quot;amount\&quot;:0.056}]     - &#x60;seed&#x60; 758748394   - &#x60;walletPassphrase&#x60; **Note: this was provided when you created the wallet** OHh6IIININmfmjGGsxlBBft2ch61VncaPscsp295h2ULx9xPY07Jom3d5cBifgoW    The resulting string, previous to hash is::        9df3f909-088d-4724-b34f-9a587c5ccc15~[{\&quot;address\&quot;:\&quot;bc1q5defveu0acrf87m3huwxjq6pqaszdjf3d4ej9y\&quot;,\&quot;amount\&quot;:0.01},{\&quot;address\&quot;:\&quot;bc1qs59a7e23zpjm0znteytrxvj839dlp205e50zch\&quot;,\&quot;amount\&quot;:0.056}]~758748394~OHh6IIININmfmjGGsxlBBft2ch61VncaPscsp295h2ULx9xPY07Jom3d5cBifgoW    Finally after applying &#x60;sha-256&#x60; hash, we obtain the required &#x60;token&#x60;:        804ca9457b0fe3e4d243fe9e39e760ff1f287491ae8e79d015f92f7c6c96d7b1       --- ## Important    * Send requests are commonly queued, optionally you can specify a callback to get your web / app notified as soon as the request has been fully broadcasted to the Network.    * Transaction is limited to &#x60;25&#x60; destination addresses per request      * Tx Hash is provided only through the callback      * Confirmed send requests information is &#x60;DELETED&#x60; after &#x60;3 days&#x60; of being confirmed    --- ## Minimum Send Amounts     * &#x60;Bitcoin&#x60;: 0.0001 BTC   * &#x60;Litecoin&#x60;: 0.001 LTC   * &#x60;Bitcoin Cash&#x60;: 0.001 BCH    --- ## Callback Send requests are commonly queued, optionally you can specify a callback to get your web / app notified as soon as the request has been fully broadcasted to the Network.  The callback sent to your callback url is a **POST** request with the following parameters:       *Example:*      currency:     \&quot;BTC\&quot;     walletId:     \&quot;698fd3f6-5482-4798-8a46-6732af440616\&quot;     requestId:    \&quot;123fd3f6-9078-5790-4f40-6932bf440120\&quot;     timestamp:    1577179288     lastupdate:   1577179388     amount:       \&quot;0.01\&quot;     callback:     \&quot;https://callback-url.com\&quot;     destination:  &#39;[{\&quot;address\&quot;: \&quot;bc1qf6ss0qtdn5q42...\&quot;                   \&quot;amount\&quot;: \&quot;0.01\&quot;}]&#39;     txid:         \&quot;2cdac43e92e65cb428e3ed992bcf61347...\&quot;     status:       0 
+
+---
+
+## Required Authorization Token
+
+This transaction requires an authorization `token` which is the result
+of the `sha-256` hash of the following string:
+
+
+
+    walletId~destination~seed~walletPassphrase
+
+
+
+**For example**
+
+
+Considering the following example values for the token:
+  - `walletId` 9df3f909-088d-4724-b34f-9a587c5ccc15
+  - `destination`
+    [{"address":"bc1q5defveu0acrf87m3huwxjq6pqaszdjf3d4ej9y","amount":0.01},{"address":"bc1qs59a7e23zpjm0znteytrxvj839dlp205e50zch","amount":0.056}]
+
+
+  - `seed` 758748394
+  - `walletPassphrase` **Note: this was provided when you created the wallet** OHh6IIININmfmjGGsxlBBft2ch61VncaPscsp295h2ULx9xPY07Jom3d5cBifgoW
+
+The resulting string, previous to hash is::
+
+
+
+    9df3f909-088d-4724-b34f-9a587c5ccc15~[{"address":"bc1q5defveu0acrf87m3huwxjq6pqaszdjf3d4ej9y","amount":0.01},{"address":"bc1qs59a7e23zpjm0znteytrxvj839dlp205e50zch","amount":0.056}]~758748394~OHh6IIININmfmjGGsxlBBft2ch61VncaPscsp295h2ULx9xPY07Jom3d5cBifgoW
+
+
+
+Finally after applying `sha-256` hash, we obtain the required `token`:
+
+
+
+    804ca9457b0fe3e4d243fe9e39e760ff1f287491ae8e79d015f92f7c6c96d7b1
+
+
+---
+
+## Important
+
+  * Send requests are commonly queued, optionally you can specify a callback to get your web / app notified as soon as the request has been fully broadcasted to the Network.
+
+  * Transaction is limited to `25` destination addresses per request
+
+  * Tx Hash is provided only through the callback
+
+  * Confirmed send requests information is `DELETED`
+after `3 days` of being confirmed
+
+---
+
+## Minimum Send Amounts
+
+
+  * `Bitcoin`: 0.0001 BTC
+  * `Litecoin`: 0.001 LTC
+  * `Bitcoin Cash`: 0.001 BCH
+
+---
+
+## Callback
+
+Send requests are commonly queued, optionally you can specify a callback
+to get your web / app notified as soon as the request has been fully
+broadcasted to the Network.
+
+
+The callback sent to your callback url is a **POST** request with the
+following parameters:
+
+
+*Example:*
+
+    currency:     "BTC"
+    walletId:     "698fd3f6-5482-4798-8a46-6732af440616"
+    requestId:    "123fd3f6-9078-5790-4f40-6932bf440120"
+    timestamp:    1577179288
+    lastupdate:   1577179388
+    amount:       "0.01"
+    callback:     "https://callback-url.com"
+    destination:  '[{"address": "bc1qf6ss0qtdn5q42..."
+                  "amount": "0.01"}]'
+    txid:         "2cdac43e92e65cb428e3ed992bcf61347..."
+    status:       0
 
 ### Example
 ```kotlin
@@ -73,13 +161,13 @@ Sends funds from a wallet to one or multiple addresses.  --- ## Required Authori
 //import payrobot.models.*
 
 val apiInstance = WalletApi()
-val currency : kotlin.String = btc // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
-val walletId : kotlin.String = 9df3f909-088d-4724-b34f-9a587c5ccc15 // kotlin.String | Wallet where funds to send are stored
-val destination : kotlin.String = [{"address":"bc1q5defveu0acrf87m3huwxjq6pqaszdjf3d4ej9y","amount":0.01},{"address":"bc1qs59a7e23zpjm0znteytrxvj839dlp205e50zch","amount":0.056}]
+val currency : kotlin.String = "btc" // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
+val walletId : kotlin.String = "9df3f909-088d-4724-b34f-9a587c5ccc15" // kotlin.String | Wallet where funds to send are stored
+val destination : kotlin.String = "[{\"address\":\"bc1q5defveu0acrf87m3huwxjq6pqaszdjf3d4ej9y\",\"amount\":0.01},{\"address\":\"bc1qs59a7e23zpjm0znteytrxvj839dlp205e50zch\",\"amount\":0.056}]"
  // kotlin.String | JSON formatted array with all the destination addres(es) and the amount(s) to send\\ `[{\"address\":\"desired-destination-address\",\"amount\":X.XXXXXXXX}, ...]` 
-val seed : kotlin.String = 12345 // kotlin.String | Unique random string generated by your web/app. **IT MUST BE UNIQUE PER TRANSACTION PER WALLET**
-val token : kotlin.String = c3c081de9510e8405839f36a875aa9fef43032caa3015305b27d6b7e0bcfc182 // kotlin.String | SHA-256 hash of the concatenated string (substituting with the proper data):\\ `walletId~destination~seed~walletPassphrase` 
-val paramCallback : kotlin.String = https://your-app-url.com/example // kotlin.String | Optional callback to notify your web / app as soon as the send request has been fully broadcasted to the Network
+val seed : kotlin.String = "12345" // kotlin.String | Unique random string generated by your web/app. **IT MUST BE UNIQUE PER TRANSACTION PER WALLET**
+val token : kotlin.String = "c3c081de9510e8405839f36a875aa9fef43032caa3015305b27d6b7e0bcfc182" // kotlin.String | SHA-256 hash of the concatenated string (substituting with the proper data):\\ `walletId~destination~seed~walletPassphrase` 
+val paramCallback : kotlin.String = "https://your-app-url.com/example" // kotlin.String | Optional callback to notify your web / app as soon as the send request has been fully broadcasted to the Network
 try {
     val result : WalletSendRequest = apiInstance.createWalletSendRequest(currency, walletId, destination, seed, token, paramCallback)
     println(result)
@@ -131,8 +219,8 @@ Gets detailed information from a Wallet
 //import payrobot.models.*
 
 val apiInstance = WalletApi()
-val currency : kotlin.String = btc // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
-val walletId : kotlin.String = 775937b9-b7fc-47cf-be7c-934d602bd6af // kotlin.String | ID of the desired Wallet
+val currency : kotlin.String = "btc" // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
+val walletId : kotlin.String = "775937b9-b7fc-47cf-be7c-934d602bd6af" // kotlin.String | ID of the desired Wallet
 try {
     val result : Wallet = apiInstance.getWallet(currency, walletId)
     println(result)
@@ -180,8 +268,8 @@ Gets last 100 transactions of the wallet
 //import payrobot.models.*
 
 val apiInstance = WalletApi()
-val currency : kotlin.String = btc // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
-val walletId : kotlin.String = dd304d65-b606-4462-854b-51cdf061b00f // kotlin.String | ID of the desired Wallet
+val currency : kotlin.String = "btc" // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
+val walletId : kotlin.String = "dd304d65-b606-4462-854b-51cdf061b00f" // kotlin.String | ID of the desired Wallet
 try {
     val result : WalletHistory = apiInstance.getWalletHistory(currency, walletId)
     println(result)
@@ -229,9 +317,9 @@ Obtains detailed information about a send request
 //import payrobot.models.*
 
 val apiInstance = WalletApi()
-val currency : kotlin.String = btc // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
-val walletId : kotlin.String = 9df3f909-088d-4724-b34f-9a587c5ccc15 // kotlin.String | Wallet where funds to send are stored
-val requestId : kotlin.String = 54f78565-56e2-4ece-b925-cab6ed67eb63 // kotlin.String | Send Request ID
+val currency : kotlin.String = "btc" // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
+val walletId : kotlin.String = "9df3f909-088d-4724-b34f-9a587c5ccc15" // kotlin.String | Wallet where funds to send are stored
+val requestId : kotlin.String = "54f78565-56e2-4ece-b925-cab6ed67eb63" // kotlin.String | Send Request ID
 try {
     val result : WalletSendRequest = apiInstance.getWalletSendRequest(currency, walletId, requestId)
     println(result)
