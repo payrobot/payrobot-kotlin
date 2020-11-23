@@ -1,4 +1,4 @@
-# payrobot - Kotlin client library for Payrobot
+# Payrobot Kotlin SDK
 
 ## Requires
 
