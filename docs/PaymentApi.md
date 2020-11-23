@@ -12,9 +12,63 @@ Method | HTTP request | Description
 # **createPayment**
 > PaymentRequest createPayment(currency, type, destination, amount, paramCallback, reference)
 
-Generate a new one-use address to receive a payment
+Generates a new one-use address to receive a payment. It callbacks your
+web/app server as soon as it's paid and confirmed.
 
-Generates a new one-use address to receive a payment. It callbacks your web/app server as soon as it&#39;s paid and confirmed.  **Payment can be &#x60;forwarded&#x60; to another address or it can be &#x60;stored&#x60; in a payrobot.io wallet**     --- ## Important    * Unpaid requests are deleted after **3 hours** of theirs creation   * Confirmed payments information is deleted after **3 days** of being confirmed    --- ## Minimum Amounts     * &#x60;Bitcoin&#x60;: 0.0001 BTC   * &#x60;Litecoin&#x60;: 0.001 LTC   * &#x60;Bitcoin Cash&#x60;: 0.001 BCH    --- ## Callbacks A **payment notificacion** will be sent to your callback url in the following scenarios:    1. *Payment is received partially*   2. *Payment is being confirmed by network*   3. *Payment is confirmed at least with 1 confirmation*   The callback sent to your callback url is a **POST** request with the following parameters:  *Example:*      currency:         \&quot;BTC\&quot;     paymentId:        \&quot;698fd3f6-5482-4798-8a46-6732af440616\&quot;     address:          \&quot;3KoUDMfrov91G4SXaCKGvTWDjGia9Jod5b\&quot;     type:             0     partialAmount:    \&quot;0.00\&quot;                       //Partial amount received when payment is incomplete     remainingAmount:  \&quot;0.00\&quot;                       //Remaining amount to pay when payment is incomplete     amount:           \&quot;0.1\&quot;     feePct:           0.90     feeAmount:        \&quot;0.0009\&quot;     finalAmount:      \&quot;0.0991\&quot;     destination:      \&quot;698fd3f6-5482-4798-8a46-6732af440616\&quot;     reference:        \&quot;12345\&quot;     status:           2 
+
+**Payment can be `forwarded` to another address or it can be `stored` in
+a payrobot.io wallet**
+
+
+---
+
+## Important
+
+  * Unpaid requests are deleted after **3 hours** of theirs creation
+  * Confirmed payments information is deleted after **3 days** of being confirmed
+
+---
+
+## Minimum Amounts
+
+
+  * `Bitcoin`: 0.0001 BTC
+  * `Litecoin`: 0.001 LTC
+  * `Bitcoin Cash`: 0.001 BCH
+
+---
+
+## Callbacks
+
+A **payment notificacion** will be sent to your callback url in the
+following scenarios:
+
+  1. *Payment is received partially*
+  2. *Payment is being confirmed by network*
+  3. *Payment is confirmed at least with 1 confirmation*
+
+
+The callback sent to your callback url is a **POST** request with the
+following parameters:
+
+
+*Example:*
+
+    currency:         "BTC"
+    paymentId:        "698fd3f6-5482-4798-8a46-6732af440616"
+    address:          "3KoUDMfrov91G4SXaCKGvTWDjGia9Jod5b"
+    type:             0
+    partialAmount:    "0.00"
+                      //Partial amount received when payment is incomplete
+    remainingAmount:  "0.00"
+                      //Remaining amount to pay when payment is incomplete
+    amount:           "0.1"
+    feePct:           0.90
+    feeAmount:        "0.0009"
+    finalAmount:      "0.0991"
+    destination:      "698fd3f6-5482-4798-8a46-6732af440616"
+    reference:        "12345"
+    status:           2
 
 ### Example
 ```kotlin
