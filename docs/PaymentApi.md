@@ -77,11 +77,11 @@ following parameters:
 //import payrobot.models.*
 
 val apiInstance = PaymentApi()
-val currency : kotlin.String = btc // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
+val currency : kotlin.String = "btc" // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
 val type : kotlin.Int = 0 // kotlin.Int | * `0: Receive and forward` payment is forwarded to a desired coin address once it's confirmed  * `1: Receive and store` payment is stored in a payrobot.io wallet 
-val destination : kotlin.String = bc1qzlza4ke65fa2sqacjfu5vtwy8ar6x8xttgk999 // kotlin.String | * For `Receive and forward` payment is the `ADDRESS` where the payment is going to be forwarded as soon as it's confirmed. **ADDRESS HAS TO BE OF THE SAME TYPE OF CURRENCY**  * For `Receive and store` payment is the payrobot.io `WALLET ID` where the payment is going to be stored as soon as it's confirmed. **WALLET HAS TO BE OF THE SAME TYPE OF CURRENCY** 
+val destination : kotlin.String = "bc1qzlza4ke65fa2sqacjfu5vtwy8ar6x8xttgk999" // kotlin.String | * For `Receive and forward` payment is the `ADDRESS` where the payment is going to be forwarded as soon as it's confirmed. **ADDRESS HAS TO BE OF THE SAME TYPE OF CURRENCY**  * For `Receive and store` payment is the payrobot.io `WALLET ID` where the payment is going to be stored as soon as it's confirmed. **WALLET HAS TO BE OF THE SAME TYPE OF CURRENCY** 
 val amount : java.math.BigDecimal = 0.0129 // java.math.BigDecimal | Amount of the payment
-val paramCallback : kotlin.String = https://your-callback-url.com // kotlin.String | Your URL where payrobot.io will send the status of the payment (Webhook)
+val paramCallback : kotlin.String = "https://your-callback-url.com" // kotlin.String | Your URL where payrobot.io will send the status of the payment (Webhook)
 val reference : kotlin.String = Bill123 // kotlin.String | Optional custom reference to identify the payment
 try {
     val result : PaymentRequest = apiInstance.createPayment(currency, type, destination, amount, paramCallback, reference)
@@ -134,8 +134,8 @@ Gets detailed information about a payment
 //import payrobot.models.*
 
 val apiInstance = PaymentApi()
-val currency : kotlin.String = btc // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
-val paymentId : kotlin.String = 698fd3f6-5482-4798-8a46-6732af440616 // kotlin.String | Payment ID to query
+val currency : kotlin.String = "btc" // kotlin.String | Object Currency:   * `btc`: Bitcoin   * `ltc`: Litecoin   * `bch`: Bitcoin Cash 
+val paymentId : kotlin.String = "698fd3f6-5482-4798-8a46-6732af440616" // kotlin.String | Payment ID to query
 try {
     val result : PaymentRequest = apiInstance.getPayment(currency, paymentId)
     println(result)
